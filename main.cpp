@@ -42,7 +42,27 @@ inline void show_table(int& size, char table[][3]) {
     std::cout << "┘" << std::endl;
 }
 
-bool has_win(const char* table[][3], char user_key) {
+bool has_win(char table[][3], char user_key) {
+        if(table[0][0] == user_key && table[1][0] == user_key && table[2][0] == user_key) { //column check
+            return true;
+        } 
+        else if(table[0][1] == user_key && table[1][1] == user_key && table[2][1] == user_key) {//column check
+            return true;
+        }
+        else if(table[0][2] == user_key && table[1][2] == user_key && table[2][2] == user_key) {//column chec
+            return true;
+        }
+
+        else if(table[0][0] == user_key && table[0][1] == user_key && table[0][2] == user_key) { //row check
+            return true;
+        } 
+        else if(table[1][0] == user_key && table[1][1] == user_key && table[1][2] == user_key) {//row check
+            return true;
+        }
+        else if(table[2][0] == user_key && table[2][1] == user_key && table[2][2] == user_key) {//row check
+            return true;
+        }
+
     return false;
 }
 
@@ -51,6 +71,9 @@ int main() {
     std::string ANSI_RESET = "\033[0m";
     std::string error = ANSI_RED + "Error: ";
     std::string clear = "\033[2J";
+    std::string ANSI_ITALIC = "\033[3m";
+    std::string ANSI_PURPLE = "\033[35m";
+    std::string success = ANSI_ITALIC + ANSI_PURPLE;
     int draw_position;
     char user_key;
     char table[3][3] = 
@@ -66,7 +89,7 @@ int main() {
     show_table(size, table);
 
     while (user_key != 'o' && user_key != 'x') {
-        std::cout << std::endl << ANSI_RESET << "[?] Which do you wanna be? (o/x): ";
+        std::cout << std::endl << ANSI_RESET << "> Which one do you wanna be? (o/x): ";
         std::cin >> user_key;
         if(user_key != 'o' && user_key != 'x') {
             std::cerr << ANSI_RED << "  [!] Oops, thats not a valid definition.";
@@ -83,7 +106,7 @@ int main() {
 
     while(true) {
         std::cout << std::endl;
-        std::cout << ANSI_RESET << "[Your turn] Enter a position (1 - 9): ";
+        std::cout << ANSI_RESET << "[Your turn] > Enter a position (1 - 9): ";
         std::cin >> draw_position;
 
         if(!draw_position) {
@@ -182,7 +205,12 @@ int main() {
                     std::cout << "\e[0;34m\e[3m[You] Moved on the " << temporal_position << " position ✅" << std::endl << ANSI_RESET;
                     std::cout << "\e[0;32m\e[3m[IA] Moved on the " << index << " position ✅" << std::endl << std::endl << ANSI_RESET;
                     show_table(size, table);
-                    std::this_thread::sleep_for(std::chrono::milliseconds(800));
+
+                    if(has_win(table, user_key)) {
+                        std::cout << std::endl;
+                        std::cout << success <<"🎉 You have winned, congrats! 🥳" << ANSI_RESET;
+                        break;
+                    }
                 }
             }
         }
