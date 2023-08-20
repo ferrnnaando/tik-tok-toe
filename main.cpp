@@ -43,23 +43,10 @@ inline void show_table(int& size, char table[][3]) {
 }
 
 bool has_win(char table[][3], char user_key) {
-        if(table[0][0] == user_key && table[1][0] == user_key && table[2][0] == user_key) { //column check
-            return true;
-        } 
-        else if(table[0][1] == user_key && table[1][1] == user_key && table[2][1] == user_key) {//column check
+       if((table[0][0] == user_key && table[1][0] == user_key && table[2][0] == user_key) || (table[0][1] == user_key && table[1][1] == user_key && table[2][1] == user_key) || (table[0][2] == user_key && table[1][2] == user_key && table[2][2] == user_key)) { //column check
             return true;
         }
-        else if(table[0][2] == user_key && table[1][2] == user_key && table[2][2] == user_key) {//column chec
-            return true;
-        }
-
-        else if(table[0][0] == user_key && table[0][1] == user_key && table[0][2] == user_key) { //row check
-            return true;
-        } 
-        else if(table[1][0] == user_key && table[1][1] == user_key && table[1][2] == user_key) {//row check
-            return true;
-        }
-        else if(table[2][0] == user_key && table[2][1] == user_key && table[2][2] == user_key) {//row check
+        else if((table[0][0] == user_key && table[0][1] == user_key && table[0][2] == user_key) || (table[1][0] == user_key && table[1][1] == user_key && table[1][2] == user_key) || (table[2][0] == user_key && table[2][1] == user_key && table[2][2] == user_key)) { //row check
             return true;
         }
 
@@ -74,7 +61,7 @@ int main() {
     std::string ANSI_ITALIC = "\033[3m";
     std::string ANSI_PURPLE = "\033[35m";
     std::string success = ANSI_ITALIC + ANSI_PURPLE;
-    int draw_position;
+    int draw_position, what_to_do;
     char user_key;
     char table[3][3] = 
     {
@@ -207,9 +194,22 @@ int main() {
                     show_table(size, table);
 
                     if(has_win(table, user_key)) {
-                        std::cout << std::endl;
-                        std::cout << success <<"🎉 You have winned, congrats! 🥳" << ANSI_RESET;
-                        break;
+                        std::cout << std::endl << success <<"🎉 You have winned, congrats! 🥳" << ANSI_RESET;
+                        std::this_thread::sleep_for(std::chrono::seconds(1));
+                        std::cout << "\n[?] What to do\n1-. Re-start,\n(Any key)-. Exit\n\n> ";
+                        std::cin >> what_to_do;
+                        if(what_to_do == 1) {
+                                for(int i = 0; i < size; i++) {
+                                    for(int j = 0; j < size; j++) {
+                                        table[i][j] = ' ';
+                                    }
+                                }
+                                std::cout << "\n\033[0m";
+                                show_table(size, table);
+                            continue;
+                        } else {
+                            return 0;
+                        }
                     }
                 }
             }
