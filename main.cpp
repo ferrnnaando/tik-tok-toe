@@ -43,10 +43,18 @@ inline void show_table(int& size, char table[][3]) {
 }
 
 bool has_win(char table[][3], char user_key) {
-       if((table[0][0] == user_key && table[1][0] == user_key && table[2][0] == user_key) || (table[0][1] == user_key && table[1][1] == user_key && table[2][1] == user_key) || (table[0][2] == user_key && table[1][2] == user_key && table[2][2] == user_key)) { //column check
+       if((table[0][0] == user_key && table[1][0] == user_key && table[2][0] == user_key) 
+       || (table[0][1] == user_key && table[1][1] == user_key && table[2][1] == user_key) 
+       || (table[0][2] == user_key && table[1][2] == user_key && table[2][2] == user_key)) { //column check
             return true;
         }
-        else if((table[0][0] == user_key && table[0][1] == user_key && table[0][2] == user_key) || (table[1][0] == user_key && table[1][1] == user_key && table[1][2] == user_key) || (table[2][0] == user_key && table[2][1] == user_key && table[2][2] == user_key)) { //row check
+        else if((table[0][0] == user_key && table[0][1] == user_key && table[0][2] == user_key) 
+        || (table[1][0] == user_key && table[1][1] == user_key && table[1][2] == user_key) 
+        || (table[2][0] == user_key && table[2][1] == user_key && table[2][2] == user_key)) { //row check
+            return true;
+        } 
+        else if((table[0][0] == user_key && table[1][1] == user_key && table[2][2] == user_key) 
+        || (table[0][2] == user_key && table[1][1] == user_key && table[2][0] == user_key)) {
             return true;
         }
 
@@ -128,6 +136,31 @@ int main() {
                         table[1][0] = user_key;
                         std::cout << clear;
                         show_table(size, table);
+                    } 
+                    else if(draw_position == 5) {
+                        table[1][1] = user_key;
+                        std::cout << clear;
+                        show_table(size, table);
+                    }
+                    else if(draw_position == 6) {
+                        table[1][2] = user_key;
+                        std::cout << clear;
+                        show_table(size, table);
+                    }
+                    else if(draw_position == 7) {
+                        table[2][0] = user_key;
+                        std::cout << clear;
+                        show_table(size, table);
+                    }
+                    else if(draw_position == 8) {
+                        table[2][1] = user_key;
+                        std::cout << clear;
+                        show_table(size, table);
+                    }
+                    else if(draw_position == 9) {
+                        table[2][2] = user_key;
+                        std::cout << clear;
+                        show_table(size, table);
                     }
 
                     std::cout << std::endl;
@@ -195,8 +228,8 @@ int main() {
 
                     if(has_win(table, user_key)) {
                         std::cout << std::endl << success <<"🎉 You have winned, congrats! 🥳" << ANSI_RESET;
-                        std::this_thread::sleep_for(std::chrono::seconds(1));
-                        std::cout << "\n[?] What to do\n1-. Re-start,\n(Any key)-. Exit\n\n> ";
+                        std::this_thread::sleep_for(std::chrono::milliseconds(600));
+                        std::cout << "\n[?] What to do\n1-. Re-start,\n2-. Exit\n\n> ";
                         std::cin >> what_to_do;
                         if(what_to_do == 1) {
                                 for(int i = 0; i < size; i++) {
