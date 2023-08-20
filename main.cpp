@@ -29,6 +29,7 @@ inline void show_table(int& size, char table[][3]) {
         }
 
         for(int j = 0; j < 3; j++) {
+            
             std::cout << table[i][j] << " │ ";
         }
     }
