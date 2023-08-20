@@ -140,7 +140,7 @@ int main() {
                     std::cout << clear;
 
                     std::string temporal_position = std::to_string(draw_position);
-                    std::string index = std::to_string(row * 3 + col + 1);
+                    std::string index = std::to_string(random_row * 3 + random_col + 1);
 
                     if(index == "1") {
                         index += "st";
@@ -179,7 +179,7 @@ int main() {
                         temporal_position += "th";
                     }
 
-                    std::cout << "\e[0;34m\e[3m[You] Moved on the " << draw_position << " position ✅" << std::endl << ANSI_RESET;
+                    std::cout << "\e[0;34m\e[3m[You] Moved on the " << temporal_position << " position ✅" << std::endl << ANSI_RESET;
                     std::cout << "\e[0;32m\e[3m[IA] Moved on the " << index << " position ✅" << std::endl << std::endl << ANSI_RESET;
                     show_table(size, table);
                     std::this_thread::sleep_for(std::chrono::milliseconds(800));
